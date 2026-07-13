@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Premium - Restorant & Skarë</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .blur-backdrop {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen selection:bg-amber-500 selection:text-black">
+
+    <header class="relative h-[45vh] flex items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(11, 15, 25, 0.3), #0b0f19), url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80');">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 text-center px-4">
+            <span class="text-amber-400 font-semibold tracking-widest text-xs uppercase bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">Shije Tradicionale</span>
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mt-3 text-white tracking-wide">SHKARA & MË SHUMË</h1>
+            <p class="text-gray-300 text-sm md:text-base mt-2 max-w-md mx-auto font-light">Eksperiencë unike e shijes, me mish të freskët dhe produkte cilësore.</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pb-24">
+        
+        <div class="flex gap-2 overflow-x-auto pb-4 mb-10 border-b border-gray-800 scrollbar-none sticky top-0 bg-[#0b0f19]/90 z-40 py-4 blur-backdrop">
+            <button onclick="filterMenu('all')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-500 text-black shadow-lg shadow-amber-500/20 whitespace-nowrap">Të gjitha</button>
+            <button onclick="filterMenu('kafe')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">☕ Kafe & Çaj</button>
+            <button onclick="filterMenu('pije')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">🥤 Pije të Ftohta</button>
+            <button onclick="filterMenu('alkool')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">🍺 Pije Alkoolike</button>
+            <button onclick="filterMenu('gjelle')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">🍲 Tradicionale</button>
+            <button onclick="filterMenu('skara')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">🥩 Skara</button>
+            <button onclick="filterMenu('kombinim')" class="cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap">🍱 Kombinime</button>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            </div>
+    </main>
+
+    <script>
+        const menuData = [
+            { name: "Macchiato", price: 0.80, category: "kafe", img: "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?auto=format&fit=crop&w=400&q=80" },
+            { name: "Espresso", price: 0.70, category: "kafe", img: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?auto=format&fit=crop&w=400&q=80" },
+            { name: "Çaj", price: 0.70, category: "kafe", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
+            { name: "Bambi", price: 1.00, category: "kafe", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80" },
+            { name: "Bambi me Shllag", price: 1.30, category: "kafe", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=400&q=80" },
+            { name: "Lëng", price: 1.50, category: "pije", img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kanaçe", price: 1.50, category: "pije", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80" },
+            { name: "Radenska", price: 1.00, category: "pije", img: "https://images.unsplash.com/photo-1608885898957-a599fb1698d6?auto=format&fit=crop&w=400&q=80" },
+            { name: "Ajron", price: 0.50, category: "pije", img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" },
+            { name: "Jogurt", price: 0.50, category: "pije", img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=400&q=80" },
+            { name: "Ujë", price: 0.70, category: "pije", img: "https://images.unsplash.com/photo-1608885898957-a599fb1698d6?auto=format&fit=crop&w=400&q=80" },
+            { name: "Ujë me Gaz", price: 0.70, category: "pije", img: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=400&q=80" },
+            { name: "Birrë Peja", price: 1.50, category: "alkool", img: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80" },
+            { name: "Birrë Lasko", price: 1.50, category: "alkool", img: "https://images.unsplash.com/photo-1566633806327-68e152aaf26d?auto=format&fit=crop&w=400&q=80" },
+            { name: "Birrë Nikshiq", price: 1.50, category: "alkool", img: "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?auto=format&fit=crop&w=400&q=80" },
+            { name: "Badel", price: 1.50, category: "alkool", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80" },
+            { name: "Badel (E madhe)", price: 2.00, category: "alkool", img: "https://images.unsplash.com/photo-1569701813229-33284b643e3c?auto=format&fit=crop&w=400&q=80" },
+            { name: "Stock", price: 1.50, category: "alkool", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80" },
+            { name: "Raki Shtëpie", price: 0.70, category: "alkool", img: "https://images.unsplash.com/photo-1629987721111-6be2ee15ff29?auto=format&fit=crop&w=400&q=80" },
+            { name: "Pasul", price: 4.00, category: "gjelle", img: "https://images.unsplash.com/photo-1547592165-e1d17fed6005?auto=format&fit=crop&w=400&q=80" },
+            { name: "Gulash", price: 4.00, category: "gjelle", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80" },
+            { name: "Omlet", price: 2.50, category: "gjelle", img: "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?auto=format&fit=crop&w=400&q=80" },
+            { name: "Picë e Madhe", price: 4.50, category: "gjelle", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80" },
+            { name: "Picë e Vogël", price: 3.00, category: "gjelle", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=400&q=80" },
+            { name: "Qebab (1 copë)", price: 0.50, category: "skara", img: "https://images.unsplash.com/photo-1529692236671-f1f6e994a52c?auto=format&fit=crop&w=400&q=80" },
+            { name: "Qofte (5 copë)", price: 2.50, category: "skara", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80" },
+            { name: "Qofte (7 copë)", price: 3.50, category: "skara", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80" },
+            { name: "Qofte (8 copë)", price: 4.00, category: "skara", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80" },
+            { name: "Qofte (10 copë)", price: 5.00, category: "skara", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80" },
+            { name: "Pleskavicë", price: 2.00, category: "skara", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80" },
+            { name: "Pleskavicë XL", price: 5.00, category: "skara", img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=400&q=80" },
+            { name: "Suxhuk", price: 2.50, category: "skara", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+            { name: "Filetë Pule", price: 3.50, category: "skara", img: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kofshë Pule", price: 3.50, category: "skara", img: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kombinim Meny", price: 5.00, category: "kombinim", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kombinim Familjar", price: 6.00, category: "kombinim", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kombinim Premium", price: 8.00, category: "kombinim", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" },
+            { name: "Kombinim XL Super", price: 10.00, category: "kombinim", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" }
+        ];
+
+        function displayMenu(items) {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-gradient-to-r from-gray-900 to-gray-950 rounded-2xl overflow-hidden border border-gray-800 hover:border-amber-500/30 transition-all duration-300 flex items-center p-4 gap-4 shadow-md group";
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="w-20 h-20 md:w-24 md:h-24 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300 bg-gray-800">
+                    <div class="flex-1">
+                        <h3 class="text-white font-semibold text-base md:text-lg tracking-wide">${item.name}</h3>
+                        <p class="text-xs text-gray-500 capitalize mt-0.5">Kategoria: ${item.category}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-amber-400 font-bold text-lg md:text-xl">${item.price.toFixed(2)} €</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMenu(category) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => btn.className = "cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-gray-900 text-gray-400 hover:text-white border border-gray-800 whitespace-nowrap");
+            
+            // Highlight chosen tab
+            if (event && event.target) {
+                event.target.className = "cat-btn px-5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-500 text-black shadow-lg shadow-amber-500/20 whitespace-nowrap";
+            }
+
+            if(category === 'all') { displayMenu(menuData); } 
+            else { displayMenu(menuData.filter(item => item.category === category)); }
+        }
+
+        window.onload = () => { displayMenu(menuData); };
+    </script>
+</body>
+</html>
